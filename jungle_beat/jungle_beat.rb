@@ -4,12 +4,6 @@ class JungleBeat
   attr_reader :head
 
   def initialize(data)
-    # if data is given:
-    # data can be multiple words
-    # so we should split it and push
-    # each word
-    # otherwise if no data is given:
-    # don't try to push anything
     @data = data
     if @data
       @data.split.each do |element|
@@ -25,6 +19,10 @@ class JungleBeat
     last.next_node = node unless last == node
   end
 
+  def all
+    @data
+  end
+
   def count
     node = @head
     if node
@@ -37,6 +35,10 @@ class JungleBeat
     else
       0
     end
+  end
+
+  def play
+    `say -r 500 -v Boing #{@data}`
   end
 
   def last_link(node = nil)

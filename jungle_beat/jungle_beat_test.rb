@@ -13,9 +13,6 @@ class JungleBeatTest < MiniTest::Test
   end
 
   def test_initialize_without_head
-    # don't give head data when creating,
-    # so head should be nil and
-    # count should be 0
     jb = JungleBeat.new(nil)
     assert_equal nil, jb.head
     assert_equal 0, jb.count
@@ -23,18 +20,12 @@ class JungleBeatTest < MiniTest::Test
   end
 
   def test_pushing_onto_empty_list
-    # create list with no head data
-    # push data onto that list
-    # pushed data should become the head data
-    # count should be 1
-    jb = JungleBeat.new("poop")
-    assert_equal "poop", jb.head.data
+    jb = JungleBeat.new("pop")
+    assert_equal "pop", jb.head.data
     assert_equal 1, jb.count
   end
 
   def test_initialize_with_multiple_words
-    # init with "dee dee dee"
-    # count should be 3
     jb = JungleBeat.new("doop bap zip")
     assert_equal 3, jb.count
   end
@@ -63,7 +54,17 @@ class JungleBeatTest < MiniTest::Test
 
     assert_equal 'bop', jb.last_link(jb.head).data
   end
+  #
+  def test_return_entire_linked_list
+    jb = JungleBeat.new('deep beep meep zip')
+    assert_equal 'deep beep meep zip', jb.all
+  end
 
+  def test_can_it_play_sound
+    jb = JungleBeat.new('deep dop dop deep')
+    jb.play
+    assert true
+  end
 end
 
 #Jungle Beat Test
