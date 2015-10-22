@@ -1,61 +1,58 @@
-require 'pry'     # => true
+require 'pry'
 class JungleBeat
 
-  attr_reader :head  # => nil
+  attr_reader :head
 
   def initialize(data)
-    @head = Node.new(data)
-    @counter = 1
-  end                       # => :initialize
+    # if data is given:
+    # data can be multiple words
+    # so we should split it and push
+    # each word
+    # otherwise if no data is given:
+    # don't try to push anything
+    @data = data
+    if @data
+      @data.split.each do |element|
+        push(element)
+      end
+    end
+  end
 
   def push(data)
     node = Node.new(data)
+    @head = node if @head == nil
     last = last_link(@head)
-    last.next_node = node
-  end                        # => :push
+    last.next_node = node unless last == node
+  end
 
-def last_link(node)
-  if node.next_node != nil
-    last_link(node.next_node)
+  def count
+    node = @head
+    if node
+      counter = 1
+      until node.next_node == nil
+        node = node.next_node
+        counter += 1
+      end
+      counter
+    else
+      0
+    end
+  end
+
+  def last_link(node = nil)
+    if node && node.next_node != nil
+      last_link(node.next_node)
     else
       node
     end
-  end                          # => :last_link                           # => :last_link
-
-def split(data)
-  # data = 'beep boop bop'
-  data_array = data.split(' ')
-  # data_array = ['beep', 'boop', 'bop']
-  # Set @head if necessary
-  # Set next_node property on previous node
-  previous_node = nil
-  data_array.each do |b|
-    node = Node.new(b)
-    previous_node.next_node unless previous_node.nil?
-    previous_node = node
-  # Node 1: value: 'beep', next: node2
-  # Node 2: value: 'boop', next: node3
-  # Node 3: value: 'bop', next: nil
-  end
-
-end  # => :split
-
-def count
-  node = @head
-  until node.next_node == nil
-    node = node.next_node
-    @counter += 1
   end
 end
-                          # => :count
-end
-
 
 class Node
-attr_accessor :data, :next_node  # => nil
+attr_accessor :data, :next_node
 
   def initialize(data)
     @data = data
     @next_node = nil
-  end                   # => :initialize
-end                     # => :initialize
+  end
+end
